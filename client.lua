@@ -62,15 +62,18 @@ Citizen.CreateThread(function()
 			bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
 				if zone then
 					if isPointInside then
+
 						SendNUIMessage({
-							zone = zone.data,
-							stands = BikeStand
+							zone = zone,
+							BikeStyles
 						})
+						
 					  else
 						
 						SendNUIMessage({
 							close = true
 						})
+
 					  end
 				end
 			end)
