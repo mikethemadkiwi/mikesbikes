@@ -123,6 +123,6 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
 end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(bike, cb)
-    print(bike)
+    print(bike.modelName)
     cb(true)
 end)
