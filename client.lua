@@ -122,7 +122,7 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
     cb(true)
 end)
 -----------------------------------------
-RegisterNUICallback('bikeSelected', function(zone, cb)
-    
+RegisterNUICallback('bikeSelected', function(bike, cb)
+    print(bike)
     cb(true)
 end)
