@@ -8,14 +8,14 @@ $(function(){
             // console.log('ZONE',task.zone.uid)            
             // redraw the menu
             $('#mbMenu').append(`<h2>Welcome to ${task.zone.name}! Select a Bike!</h2>`);            
-            for(_d in task.stands){
-                // console.log('DEPOT',task.stands[_d].uid)
-                let boop =  task.stands[_d];
-                if(task.stands[_d].uid != task.zone.uid){
+            for(_d in task.bikes){
+                // console.log('DEPOT',task.bikes[_d].uid)
+                let boop =  task.bikes[_d];
+                if(task.bikes[_d].uid != task.zone.uid){
                     let btn = document.createElement("button");
-                    btn.innerHTML = task.stands[_d].name;
+                    btn.innerHTML = task.bikes[_d].modelName;
                     btn.type = "submit";
-                    btn.name = task.stands[_d].name;
+                    btn.name = task.bikes[_d].modelName;
                     btn.className = 'bikeMenuButton';
                     //
                     btn.onclick = function(){

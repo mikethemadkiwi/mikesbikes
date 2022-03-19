@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
 					FreezeEntityPosition(activeStands[j], true)
 					--
 					table.insert(activePzones, CircleZone:Create(vector3(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z), 2.0, {
-						name='Bike Rental',
+						name=BikeStand[j].uid,
 						useZ=false,
 						data=BikeStand[j],
 						debugPoly=true
@@ -65,9 +65,9 @@ Citizen.CreateThread(function()
 
 						SendNUIMessage({
 							zone = zone,
-							BikeStyles
+							bikes = BikeStyles
 						})
-						
+
 					  else
 						
 						SendNUIMessage({
