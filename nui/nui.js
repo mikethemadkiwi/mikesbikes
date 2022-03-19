@@ -1,6 +1,6 @@
 $(function(){
     window.addEventListener('message', function(msgData){  
-        // console.log(msgData)
+        console.log(msgData)
         document.getElementById('mbMenu').innerHTML = '';
         let task = msgData.data;
         // console.log(msgData.data)
