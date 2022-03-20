@@ -1,3 +1,4 @@
+local POLYDEBUG = true
 local isReady = false
 local BikeStyles = {
 	{
@@ -53,12 +54,13 @@ Citizen.CreateThread(function()
 						name=BikeStand[j].uid,
 						useZ=false,
 						data=BikeStand[j],
-						debugPoly=true
+						debugPoly=POLYDEBUG
 					}))
 
 				end
 			end
-			bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=true})
+			----
+			bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=POLYDEBUG})
 			bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
 				if zone then
 					if isPointInside then
@@ -77,6 +79,7 @@ Citizen.CreateThread(function()
 					  end
 				end
 			end)
+			----
 			isReady = true
 			break
 		end
@@ -123,6 +126,9 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
 end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(bike, cb)
-    print(bike[1])
+	print('bike selected by nui')
+    for j=1, #bike do
+		print(bike[j])  
+	end
     cb(true)
 end)
