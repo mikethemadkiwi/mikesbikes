@@ -19,3 +19,4 @@ client_scripts {
   '@PolyZone/ComboZone.lua'
 }
 client_script 'client.lua'
+server_script 'server.lua'

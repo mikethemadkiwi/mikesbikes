@@ -2,13 +2,16 @@ local POLYDEBUG = true
 local isReady = false
 local BikeStyles = {
 	{
-		modelName = 'BMX',		
+		modelName = 'BMX',	
+		cost = 1			
 	},
 	{
-		modelName = 'FIXTER',		
+		modelName = 'FIXTER',
+		cost = 1				
 	},
 	{
-		modelName = 'CRUISER',		
+		modelName = 'CRUISER',
+		cost = 1		
 	},
 }
 local BikeStand = {
@@ -156,8 +159,9 @@ RegisterNUICallback('bikeSelected', function(data, cb)
 		local bikemodel = data.bike.modelName
 		local retval, outPosition, outHeading = GetClosestVehicleNodeWithHeading(data.zone.pos.x,data.zone.pos.y,data.zone.pos.z,1,100,2.5)
 		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
-		local bSpawn = spawnBikeAtVehNode(bikemodel, outPosition, outHeading)		
-		local pedonbike = putPlayerPedOnBike(bSpawn)
+		TriggerServerEvent('mikesb:canhazbike', data.bike, outPosition, outHeading)
+		-- local bSpawn = spawnBikeAtVehNode(bikemodel, outPosition, outHeading)		
+		-- local pedonbike = putPlayerPedOnBike(bSpawn)
     cb(true)
 end)
 
