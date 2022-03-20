@@ -66,9 +66,9 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		end
 	end)
 end
---
+--TaskWarpPedIntoVehicle(pPed, SpawnedVehicle, -1)
 local putPlayerPedOnBike = function(abike)
-	SetPedIntoVehicle(PlayerPedId(), abike, -1)
+	TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
 end
 --------------INIT--------------
 Citizen.CreateThread(function()
