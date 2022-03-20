@@ -27,6 +27,7 @@ local BikeStand = {
 
 	},	
 }
+activeStands = {}
 activePzones = {}
 Blip = {}
 bikeComboZone = nil
