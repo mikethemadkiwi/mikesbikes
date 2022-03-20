@@ -127,7 +127,8 @@ end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(data, cb)
 	print('bike selected by nui')
-		print(data.bike.modelName)  
+		print(data.bike.modelName) 
+		local bikemodel = data.bike.modelName
 		local retval --[[ boolean ]], outPosition --[[ vector3 ]], outHeading --[[ number ]] =
 		GetClosestVehicleNodeWithHeading(
 			data.zone.pos.x --[[ number ]], 
@@ -140,6 +141,32 @@ RegisterNUICallback('bikeSelected', function(data, cb)
 		print(retval)
 		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
 
+		local model = (type(bikemodel) == 'number' and bikemodel or GetHashKey(bikemodel))
+		Citizen.CreateThread(function()
+			RequestModel(model)
+			while not HasModelLoaded(model) do
+				Citizen.Wait(0)
+			end
+			abike = CreateVehicle(model, outPosition.x, outPosition.y, outPosition.z, outHeading, true, false)
+			abikeNetId      = NetworkGetNetworkIdFromEntity(abike)
+			SetNetworkIdCanMigrate(abikeNetId, true)
+			SetEntityAsMissionEntity(abike, true, false)
+			SetVehicleHasBeenOwnedByPlayer(abike, false)
+			SetDisableVehicleWindowCollisions(abike, false)
+			SetEntityInvincible(abike, true)
+			SetVehicleNeedsToBeHotwired(abike, false)
+			SetModelAsNoLongerNeeded(model)
+			RequestCollisionAtCoord(x, y, z)
+			while not HasCollisionLoadedAroundEntity(abike) do
+				RequestCollisionAtCoord(x, y, z)
+				Citizen.Wait(0)
+			end
+			SetVehRadioStation(abike, 'OFF')
+			print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
+			if cb ~= nil then
+				cb(abike)
+			end
+		end)
 
 
     cb(true)
