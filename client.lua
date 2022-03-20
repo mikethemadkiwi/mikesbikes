@@ -127,8 +127,6 @@ end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(bike, cb)
 	print('bike selected by nui')
-    for j=1, #bike do
-		print(bike[j])  
-	end
+		print(bike.out)  
     cb(true)
 end)
