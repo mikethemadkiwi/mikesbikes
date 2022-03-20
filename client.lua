@@ -39,13 +39,13 @@ bikeComboZone = nil
 -- Object Hash (uInt32):	2980693860
 ------------FUNCTIONS-----------
 local spawnBikeAtVehNode = function(bModel, cPos, cHead)
-	local model = (type(bikemodel) == 'number' and bikemodel or GetHashKey(bikemodel))
+	local model = (type(bModel) == 'number' and bModel or GetHashKey(bModel))
 	Citizen.CreateThread(function()
 		RequestModel(model)
 		while not HasModelLoaded(model) do
 			Citizen.Wait(0)
 		end
-		abike = CreateVehicle(model, outPosition.x, outPosition.y, outPosition.z, outHeading, true, false)
+		abike = CreateVehicle(model, cPos.x, cPos.y, cPos.z, cHead, true, false)
 		abikeNetId      = NetworkGetNetworkIdFromEntity(abike)
 		SetNetworkIdCanMigrate(abikeNetId, true)
 		SetEntityAsMissionEntity(abike, true, false)
@@ -54,9 +54,9 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		SetEntityInvincible(abike, true)
 		SetVehicleNeedsToBeHotwired(abike, false)
 		SetModelAsNoLongerNeeded(model)
-		RequestCollisionAtCoord(outPosition.x, outPosition.y, outPosition.z)
+		RequestCollisionAtCoord(cPos.x, cPos.y, cPos.z)
 		while not HasCollisionLoadedAroundEntity(abike) do
-			RequestCollisionAtCoord(outPosition.x, outPosition.y, outPosition.z)
+			RequestCollisionAtCoord(cPos.x, cPos.y, cPos.z)
 			Citizen.Wait(0)
 		end
 		SetVehRadioStation(abike, 'OFF')
