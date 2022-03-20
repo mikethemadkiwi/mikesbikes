@@ -37,6 +37,39 @@ bikeComboZone = nil
 -- Object Name:	prop_bikerack_2
 -- Object Hash:	-1314273436
 -- Object Hash (uInt32):	2980693860
+------------FUNCTIONS-----------
+local spawnBikeAtVehNode = function(bModel, cPos, cHead)
+	local model = (type(bikemodel) == 'number' and bikemodel or GetHashKey(bikemodel))
+	Citizen.CreateThread(function()
+		RequestModel(model)
+		while not HasModelLoaded(model) do
+			Citizen.Wait(0)
+		end
+		abike = CreateVehicle(model, outPosition.x, outPosition.y, outPosition.z, outHeading, true, false)
+		abikeNetId      = NetworkGetNetworkIdFromEntity(abike)
+		SetNetworkIdCanMigrate(abikeNetId, true)
+		SetEntityAsMissionEntity(abike, true, false)
+		SetVehicleHasBeenOwnedByPlayer(abike, false)
+		SetDisableVehicleWindowCollisions(abike, false)
+		SetEntityInvincible(abike, true)
+		SetVehicleNeedsToBeHotwired(abike, false)
+		SetModelAsNoLongerNeeded(model)
+		RequestCollisionAtCoord(outPosition.x, outPosition.y, outPosition.z)
+		while not HasCollisionLoadedAroundEntity(abike) do
+			RequestCollisionAtCoord(outPosition.x, outPosition.y, outPosition.z)
+			Citizen.Wait(0)
+		end
+		SetVehRadioStation(abike, 'OFF')
+		print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
+		if cb ~= nil then
+			cb(abike)
+		end
+	end)
+end
+--
+local putPlayerPedOnBike = function(abike)
+
+end
 --------------INIT--------------
 Citizen.CreateThread(function()
 	while true do
@@ -126,49 +159,11 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
 end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(data, cb)
-	print('bike selected by nui')
-		print(data.bike.modelName) 
 		local bikemodel = data.bike.modelName
-		local retval --[[ boolean ]], outPosition --[[ vector3 ]], outHeading --[[ number ]] =
-		GetClosestVehicleNodeWithHeading(
-			data.zone.pos.x --[[ number ]], 
-			data.zone.pos.y --[[ number ]], 
-			data.zone.pos.z --[[ number ]], 
-			1 --[[ integer ]], 
-			100 --[[ number ]], 
-			2.5 --[[ integer ]]
-		)
-		print(retval)
+		local retval, outPosition, outHeading = GetClosestVehicleNodeWithHeading(data.zone.pos.x,data.zone.pos.y,data.zone.pos.z,1,100,2.5)
 		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
-
-		local model = (type(bikemodel) == 'number' and bikemodel or GetHashKey(bikemodel))
-		Citizen.CreateThread(function()
-			RequestModel(model)
-			while not HasModelLoaded(model) do
-				Citizen.Wait(0)
-			end
-			abike = CreateVehicle(model, outPosition.x, outPosition.y, outPosition.z, outHeading, true, false)
-			abikeNetId      = NetworkGetNetworkIdFromEntity(abike)
-			SetNetworkIdCanMigrate(abikeNetId, true)
-			SetEntityAsMissionEntity(abike, true, false)
-			SetVehicleHasBeenOwnedByPlayer(abike, false)
-			SetDisableVehicleWindowCollisions(abike, false)
-			SetEntityInvincible(abike, true)
-			SetVehicleNeedsToBeHotwired(abike, false)
-			SetModelAsNoLongerNeeded(model)
-			RequestCollisionAtCoord(x, y, z)
-			while not HasCollisionLoadedAroundEntity(abike) do
-				RequestCollisionAtCoord(x, y, z)
-				Citizen.Wait(0)
-			end
-			SetVehRadioStation(abike, 'OFF')
-			print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
-			if cb ~= nil then
-				cb(abike)
-			end
-		end)
-
-
+		local bSpawn = spawnBikeAtVehNode(bikemodel, outPosition, outHeading)		
+		local pedonbike = putPlayerPedOnBike(bSpawn)
     cb(true)
 end)
 
