@@ -109,7 +109,7 @@ Citizen.CreateThread(function()
 						end
 					end)
 				elseif bikeComboZone ~= nil then
-					bikeComboZone == nil
+					bikeComboZone = nil
 				end
 			end
 		end
