@@ -61,6 +61,7 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		end
 		SetVehRadioStation(abike, 'OFF')
 		print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
+		TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
 		if cb ~= nil then
 			cb(abike)
 		end
@@ -68,7 +69,7 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 end
 --TaskWarpPedIntoVehicle(pPed, SpawnedVehicle, -1)
 local putPlayerPedOnBike = function(abike)
-	TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
+	
 end
 --------------INIT--------------
 Citizen.CreateThread(function()
