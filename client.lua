@@ -27,10 +27,6 @@ local BikeStand = {
 
 	},	
 }
-
-
-
-activeStands = {}
 activePzones = {}
 Blip = {}
 bikeComboZone = nil
@@ -67,19 +63,12 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		end
 	end)
 end
---TaskWarpPedIntoVehicle(pPed, SpawnedVehicle, -1)
-local putPlayerPedOnBike = function(abike)
-	
-end
 --------------INIT--------------
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)		
-        local pCoords = GetEntityCoords(PlayerPedId())
+		Citizen.Wait(0)	
 		if NetworkIsPlayerActive(PlayerId()) then
 			for j=1, #BikeStand do
-				local distanceToStand = #(pCoords -  BikeStand[j].pos)
-				if distanceToStand < 49 then
 					activeStands[j] = CreateObject(-1314273436, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z, false, false, false)
 					SetEntityHeading(activeStands[j], BikeStand[j].h)
 					FreezeEntityPosition(activeStands[j], true)
@@ -90,39 +79,43 @@ Citizen.CreateThread(function()
 						data=BikeStand[j],
 						debugPoly=POLYDEBUG
 					}))
-
-				end
-			end
-			----
-			bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=POLYDEBUG})
-			bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
-				if zone then
-					if isPointInside then
-
-						SendNUIMessage({
-							zone = zone.data,
-							bikes = BikeStyles
-						})
-
-					  else
-						
-						SendNUIMessage({
-							close = true
-						})
-
-					  end
-				end
-			end)
-			----
-			isReady = true
+			end			
 			break
 		end
 	end
 end)
-
-
-
---
+--------------BIKE RACK LOOP--------------
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)		
+        local pCoords = GetEntityCoords(PlayerPedId())
+		if NetworkIsPlayerActive(PlayerId()) then
+			for j=1, #BikeStand do
+				local distanceToStand = #(pCoords -  BikeStand[j].pos)
+				if distanceToStand < 15 then
+					bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=POLYDEBUG})
+					bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
+						if zone then
+							if isPointInside then		
+								SendNUIMessage({
+									zone = zone.data,
+									bikes = BikeStyles
+								})	
+							else							
+								SendNUIMessage({
+									close = true
+								})	
+							end
+						end
+					end)
+				elseif bikeComboZone ~= nil then
+					bikeComboZone == nil
+				end
+			end
+		end
+	end
+end)
+--------------BLIP LOOP--------------
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
