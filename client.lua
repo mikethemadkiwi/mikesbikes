@@ -66,7 +66,7 @@ Citizen.CreateThread(function()
 					if isPointInside then
 
 						SendNUIMessage({
-							zone = zone,
+							zone = zone.data,
 							bikes = BikeStyles
 						})
 
@@ -125,8 +125,49 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
     cb(true)
 end)
 -----------------------------------------
-RegisterNUICallback('bikeSelected', function(bike, cb)
+RegisterNUICallback('bikeSelected', function(data, cb)
 	print('bike selected by nui')
-		print(bike.out.modelName)  
+		print(data.bike.modelName)  
+		local retval --[[ boolean ]], outPosition --[[ vector3 ]], outHeading --[[ number ]] =
+		GetClosestVehicleNodeWithHeading(
+			data.zone.pos.x --[[ number ]], 
+			data.zone.pos.y --[[ number ]], 
+			data.zone.pos.z --[[ number ]], 
+			1 --[[ integer ]], 
+			100 --[[ number ]], 
+			2.5 --[[ integer ]]
+		)
+		print(retval)
+		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
+
+
+
     cb(true)
 end)
+
+-- int nodeTypeAsphaltRoad = 0;
+-- int nodeTypeSimplePathOrAsphaltRoad = 1;
+-- int nodeTypeWater = 3;
+-- PATHFIND::GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(coordX, coordY, coordZ, &closestAsphaltRoad, &roadHeadingAsphaltRoad, nodeTypeAsphaltRoad, 3, 0);
+-- PATHFIND::GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(coordX, coordY, coordZ, &closestWater, &roadHeadingWater, nodeTypeWater, 3, 0);
+
+
+
+-- public enum Nodetype { AnyRoad, Road, Offroad, Water }    
+-- public static Vector3 GenerateSpawnPos(Vector3 desiredPos, Nodetype roadtype, bool sidewalk){        
+-- 	Vector3 finalpos = Vector3.Zero;
+-- 	bool ForceOffroad = false;
+-- 	OutputArgument outArgA = new OutputArgument();
+-- 	int NodeNumber = 1;
+-- 	int type = 0;
+-- 	if (roadtype == Nodetype.AnyRoad) type = 1;
+-- 	if (roadtype == Nodetype.Road) type = 0;
+-- 	if (roadtype == Nodetype.Offroad) { type = 1; ForceOffroad = true; }
+-- 	if (roadtype == Nodetype.Water) type = 3;
+-- 	int NodeID = Function.Call<int>(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type, 300f, 300f);
+-- 	if (ForceOffroad)
+-- 	{
+-- 		while (!Function.Call<bool>(Hash._GET_IS_SLOW_ROAD_FLAG, NodeID) && NodeNumber < 500)
+-- 		{
+-- 			NodeNumber++;
+-- 			NodeID = Function.Call<int>(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type, 300f, 300f);             }        }        Function.Call(Hash.GET_VEHICLE_NODE_POSITION, NodeID, outArgA);        finalpos = outArgA.GetResult<Vector3>();        if (sidewalk) finalpos = World.GetNextPositionOnSidewalk(finalpos);        return finalpos;    }

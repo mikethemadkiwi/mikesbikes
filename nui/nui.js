@@ -24,7 +24,7 @@ $(function(){
                         headers: {
                             'Content-Type': 'application/json; charset=UTF-8',
                         },
-                        body: JSON.stringify({in:task.zone, out:boop})
+                        body: JSON.stringify({zone:task.zone, bike:boop})
                     })
                     .then(resp => resp.json()).then(resp => {                                  
                         fetch(`https://${GetParentResourceName()}/nuifocus`, {
