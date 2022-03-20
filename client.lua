@@ -94,21 +94,23 @@ Citizen.CreateThread(function()
 			for j=1, #BikeStand do
 				local distanceToStand = #(pCoords -  BikeStand[j].pos)
 				if distanceToStand < 15 then
-					bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=POLYDEBUG})
-					bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
-						if zone then
-							if isPointInside then		
-								SendNUIMessage({
-									zone = zone.data,
-									bikes = BikeStyles
-								})	
-							else							
-								SendNUIMessage({
-									close = true
-								})	
+					if bikeComboZone == nil then
+						bikeComboZone = ComboZone:Create(activePzones, {name="BikeRentalList", debugPoly=POLYDEBUG})
+						bikeComboZone:onPlayerInOut(function(isPointInside, point, zone)
+							if zone then
+								if isPointInside then		
+									SendNUIMessage({
+										zone = zone.data,
+										bikes = BikeStyles
+									})	
+								else							
+									SendNUIMessage({
+										close = true
+									})	
+								end
 							end
-						end
-					end)
+						end)
+					end
 				elseif bikeComboZone ~= nil then
 					bikeComboZone = nil
 				end
