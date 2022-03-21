@@ -1,16 +1,15 @@
 --Player Bike Table
 local MikesBikes = {}
----- MikesBikes[source] = {bikeModel, posVector, despawnTimer}
+---- MikesBikes[source] = {bikeModel, posVector, degreeHading, despawnTimer}
 local PaymentHandler = function(cost) Print('i can charge: ['..cost..']') end
 RegisterServerEvent('mikesb:canhazbike')
-AddEventHandler('mikesb:canhazbike', function(bike, pos, head)
+AddEventHandler('mikesb:canhazbike', function(data)
     local gSrc = source
     print('['.. gSrc ..']')
-    -- make user a bike object
-    MikesBikes[source] = {bike.modelName, pos, head, 0--despawnTimer}
+    MikesBikes[source] = {data[1].modelName, data[2], data[3], 0}
     --------
     if bike.cost then
-        PaymentHandler(bike.cost)
+        PaymentHandler(data[1].cost)
     end
     --------
     TriggerClientEvent('mikesb:yescanhazbike', gSrc, MikesBikes[source])
