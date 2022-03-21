@@ -41,6 +41,7 @@ bikeComboZone = nil
 ------------FUNCTIONS-----------
 local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 	local model = (type(bModel) == 'number' and bModel or GetHashKey(bModel))
+	print('spawning bike: '..bModel)
 	Citizen.CreateThread(function()
 		RequestModel(model)
 		while not HasModelLoaded(model) do
@@ -158,7 +159,7 @@ end)
 RegisterNetEvent('mikesb:yescanhazbike')
 AddEventHandler('mikesb:yescanhazbike', function(bObj)    
 	local bSpawn = spawnBikeAtVehNode(bObj[1].modelName, bObj[2], bObj[3])		
-	local pedonbike = putPlayerPedOnBike(bSpawn)
+	-- local pedonbike = putPlayerPedOnBike(bSpawn)
 end)
 --
 RegisterNetEvent('mikesb:destroybike')
