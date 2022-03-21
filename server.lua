@@ -6,6 +6,8 @@ RegisterServerEvent('mikesb:canhazbike')
 AddEventHandler('mikesb:canhazbike', function(data)
     local gSrc = source
     print('['.. gSrc ..']')
+    print(data[1])
+    print(data[1].modelName)
     MikesBikes[source] = {data[1].modelName, data[2], data[3], 0}
     --------
     if data[1].cost then
