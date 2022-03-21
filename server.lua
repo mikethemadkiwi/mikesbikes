@@ -16,7 +16,7 @@ end)
 RegisterServerEvent('mikesb:bikeinfo')
 AddEventHandler('mikesb:bikeinfo', function(data)
     MikesBikes[source] = data
-    
+    print(data[6])
    -- update everyone else.
    TriggerClientEvent('mikesb:bikelist', -1, MikesBikes)
 end)

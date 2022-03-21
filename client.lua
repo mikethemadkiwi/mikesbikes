@@ -64,8 +64,8 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		--
 		print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
 		TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
-		print(os.time())
-		TriggerServerEvent('mikesb:bikeinfo', {abike, abikeNetId, model, cPos, cHead, 0})		
+		local inThirty = os.time(os.date('*t')) + 1800
+		TriggerServerEvent('mikesb:bikeinfo', {abike, abikeNetId, model, cPos, cHead, inThirty})		
 		--
 		if cb ~= nil then
 			cb(abike)
