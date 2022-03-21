@@ -157,8 +157,9 @@ AddEventHandler('mikesb:bikelist', function(bObj)
 end)
 --
 RegisterNetEvent('mikesb:yescanhazbike')
-AddEventHandler('mikesb:yescanhazbike', function(bObj)    
-	print(bObj[1])
+AddEventHandler('mikesb:yescanhazbike', function(bObj)
+	for j=1, #bObj do print(bObj[j]) end
+	-- print(bObj)
 	-- local bSpawn = spawnBikeAtVehNode(bObj[1].modelName, bObj[2], bObj[3])		
 	-- local pedonbike = putPlayerPedOnBike(bSpawn)
 end)
