@@ -1,7 +1,7 @@
 --Player Bike Table
 local MikesBikes = {}
 ---- MikesBikes[source] = {bikeModel, posVector, degreeHading, despawnTimer}
-local PaymentHandler = function(cost) Print('i can charge: ['..cost..']') end
+local PaymentHandler = function(cost) print('i can charge: ['..cost..']') end
 RegisterServerEvent('mikesb:canhazbike')
 AddEventHandler('mikesb:canhazbike', function(data)
     local gSrc = source
