@@ -16,7 +16,6 @@ end)
 RegisterServerEvent('mikesb:bikeinfo')
 AddEventHandler('mikesb:bikeinfo', function(data)
     MikesBikes[source] = data
-    print(data[6])
-   -- update everyone else.
+    print('Bike will expire at '..data[6])
    TriggerClientEvent('mikesb:bikelist', -1, MikesBikes)
 end)
