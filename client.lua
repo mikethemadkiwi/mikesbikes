@@ -35,6 +35,8 @@ activePzones = {}
 Blip = {}
 BikeList = {}
 bikeComboZone = nil
+playerBike = nil
+playerBikeBlip = nil
 -- Object Name:	prop_bikerack_2
 -- Object Hash:	-1314273436
 -- Object Hash (uInt32):	2980693860
@@ -66,7 +68,8 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
 		local timetoadd = 1 * 60
 		local addedtime = GetNetworkTime() + timetoadd
-		TriggerServerEvent('mikesb:bikeinfo', {abike, abikeNetId, model, cPos, cHead, addedtime})		
+		playerBike = {abike, abikeNetId, model, cPos, cHead, addedtime}
+		TriggerServerEvent('mikesb:bikeinfo', playerBike)
 		--
 		if cb ~= nil then
 			cb(abike)
@@ -142,6 +145,26 @@ Citizen.CreateThread(function()
                     EndTextCommandSetBlipName(Blip[BikeStand[i].uid])
                 end
             end
+			-- show player's bike.
+			if playerBike ~= nil then
+				if playerBikeBlip == nil then
+					playerBikeBlip = AddBlipForEntity(playerBike[1])
+					SetBlipAsFriendly(playerBikeBlip, true)
+					SetBlipSprite(playerBikeBlip, 226)
+					SetBlipDisplay(playerBikeBlip, 4)
+					SetBlipScale(playerBikeBlip, 1.0)
+					SetBlipColour(playerBikeBlip, 28)
+					SetBlipAsShortRange(playerBikeBlip, true)
+					BeginTextCommandSetBlipName("STRING")
+					AddTextComponentString("My Bike")
+					EndTextCommandSetBlipName(playerBikeBlip)
+				end
+			else
+				if playerBikeBlip ~= nil then
+					RemoveBlip(playerBikeBlip)
+					playerBikeBlip = nil
+				end
+			end
         end
     end
 end)
@@ -162,13 +185,15 @@ end)
 --
 RegisterNetEvent('mikesb:yescanhazbike')
 AddEventHandler('mikesb:yescanhazbike', function(bObj)
-	-- for j=1, #bObj do print(bObj[j]) end
 	local bSpawn = spawnBikeAtVehNode(bObj[1], bObj[2], bObj[3])
 end)
 --
 RegisterNetEvent('mikesb:destroybike')
-AddEventHandler('mikesb:destroybike', function(bObj)    
-   
+AddEventHandler('mikesb:destroybike', function(bObj)
+	
+	--
+	RemoveBlip(playerBikeBlip)
+	playerBikeBlip = nil   
 end)
 
 -----------------------------------------
@@ -178,9 +203,7 @@ RegisterNUICallback('nuifocus', function(nuistate, cb)
 end)
 -----------------------------------------
 RegisterNUICallback('bikeSelected', function(data, cb)
-		local bikemodel = data.bike.modelName
 		local retval, outPosition, outHeading = GetClosestVehicleNodeWithHeading(data.zone.pos.x,data.zone.pos.y,data.zone.pos.z,1,100,2.5)
-		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
 		TriggerServerEvent('mikesb:canhazbike', {data.bike, outPosition, outHeading})		
     cb(true)
 end)
