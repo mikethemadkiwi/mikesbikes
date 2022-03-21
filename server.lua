@@ -4,16 +4,19 @@ local MikesBikes = {}
 local PaymentHandler = function(cost) print('Bike Rental Charge: ['..cost..']') end
 RegisterServerEvent('mikesb:canhazbike')
 AddEventHandler('mikesb:canhazbike', function(data)
-    local gSrc = source
-    -- print('['.. gSrc ..']')
-    -- print(data[1])
-    -- print(data[1].modelName)
-    MikesBikes[source] = {data[1].modelName, data[2], data[3], 0}
-    --------
-    if data[1].cost then
-        PaymentHandler(data[1].cost)
-    end
-    --------
-    TriggerClientEvent('mikesb:yescanhazbike', gSrc, MikesBikes[source])
-    TriggerClientEvent('mikesb:bikelist', -1, MikesBikes)
+        local newBike = {data[1].modelName, data[2], data[3], 0}
+        --------
+        if data[1].cost then
+            PaymentHandler(data[1].cost)
+        end
+        --------
+        TriggerClientEvent('mikesb:yescanhazbike', source, newBike)
+end)
+
+RegisterServerEvent('mikesb:bikeinfo')
+AddEventHandler('mikesb:bikeinfo', function(data)
+    MikesBikes[source] = data
+    
+   -- update everyone else.
+   TriggerClientEvent('mikesb:bikelist', -1, MikesBikes)
 end)

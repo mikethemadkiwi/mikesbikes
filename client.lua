@@ -41,7 +41,6 @@ bikeComboZone = nil
 ------------FUNCTIONS-----------
 local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 	local model = (type(bModel) == 'number' and bModel or GetHashKey(bModel))
-	print('spawning bike: '..bModel)
 	Citizen.CreateThread(function()
 		RequestModel(model)
 		while not HasModelLoaded(model) do
@@ -62,8 +61,12 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 			Citizen.Wait(0)
 		end
 		SetVehRadioStation(abike, 'OFF')
+		--
 		print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
 		TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
+		print(os.time())
+		TriggerServerEvent('mikesb:bikeinfo', {abike, abikeNetId, model, cPos, cHead, 0})		
+		--
 		if cb ~= nil then
 			cb(abike)
 		end
@@ -159,8 +162,7 @@ end)
 RegisterNetEvent('mikesb:yescanhazbike')
 AddEventHandler('mikesb:yescanhazbike', function(bObj)
 	-- for j=1, #bObj do print(bObj[j]) end
-	local bSpawn = spawnBikeAtVehNode(bObj[1], bObj[2], bObj[3])		
-	local pedonbike = putPlayerPedOnBike(bSpawn)
+	local bSpawn = spawnBikeAtVehNode(bObj[1], bObj[2], bObj[3])
 end)
 --
 RegisterNetEvent('mikesb:destroybike')
