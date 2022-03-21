@@ -64,7 +64,7 @@ local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 		--
 		print('bike spawn:'.. abike .. ' netid: '.. abikeNetId ..'')
 		TaskWarpPedIntoVehicle(PlayerPedId(), abike, -1)
-		local timetoadd = 0.5 * 60
+		local timetoadd = 1 * 60
 		local addedtime = GetNetworkTime() + timetoadd
 		TriggerServerEvent('mikesb:bikeinfo', {abike, abikeNetId, model, cPos, cHead, addedtime})		
 		--
@@ -128,7 +128,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-        if isReady == true then
+        if NetworkIsPlayerActive(PlayerId()) then
             for i=1, #BikeStand do
                 if not DoesBlipExist(Blip[BikeStand[i].uid]) then                    
                     Blip[BikeStand[i].uid] = AddBlipForCoord(BikeStand[i].pos.x, BikeStand[i].pos.y, BikeStand[i].pos.z)
