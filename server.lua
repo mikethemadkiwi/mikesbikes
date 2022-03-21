@@ -8,7 +8,7 @@ AddEventHandler('mikesb:canhazbike', function(data)
     print('['.. gSrc ..']')
     MikesBikes[source] = {data[1].modelName, data[2], data[3], 0}
     --------
-    if bike.cost then
+    if data[1].cost then
         PaymentHandler(data[1].cost)
     end
     --------
