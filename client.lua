@@ -33,6 +33,7 @@ local BikeStand = {
 activeStands = {}
 activePzones = {}
 Blip = {}
+BikeList = {}
 bikeComboZone = nil
 -- Object Name:	prop_bikerack_2
 -- Object Hash:	-1314273436
@@ -148,6 +149,22 @@ AddEventHandler("onResourceStop", function(resourceName)
         end
     end
 end)
+--
+RegisterNetEvent('mikesb:bikelist')
+AddEventHandler('mikesb:bikelist', function(bObj)    
+   BikeList = bObj
+end)
+--
+RegisterNetEvent('mikesb:yescanhazbike')
+AddEventHandler('mikesb:yescanhazbike', function(bObj)    
+	local bSpawn = spawnBikeAtVehNode(bObj[1].modelName, bObj[2], bObj[3])		
+	local pedonbike = putPlayerPedOnBike(bSpawn)
+end)
+--
+RegisterNetEvent('mikesb:destroybike')
+AddEventHandler('mikesb:destroybike', function(bObj)    
+   
+end)
 
 -----------------------------------------
 RegisterNUICallback('nuifocus', function(nuistate, cb)    
@@ -159,8 +176,6 @@ RegisterNUICallback('bikeSelected', function(data, cb)
 		local bikemodel = data.bike.modelName
 		local retval, outPosition, outHeading = GetClosestVehicleNodeWithHeading(data.zone.pos.x,data.zone.pos.y,data.zone.pos.z,1,100,2.5)
 		print(outPosition.x..'/'..outPosition.y..'/'..outPosition.z..' h:'..outHeading)
-		TriggerServerEvent('mikesb:canhazbike', {data.bike, outPosition, outHeading})
-		-- local bSpawn = spawnBikeAtVehNode(bikemodel, outPosition, outHeading)		
-		-- local pedonbike = putPlayerPedOnBike(bSpawn)
+		TriggerServerEvent('mikesb:canhazbike', {data.bike, outPosition, outHeading})		
     cb(true)
 end)
