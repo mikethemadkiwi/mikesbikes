@@ -29,6 +29,13 @@ local BikeStand = {
 		spawnrider={}
 
 	},	
+	{
+		uid = 'pillhosplower1',		
+		pos=vector3(372.613, -572846, 28.835),
+		h= 72.56,
+		spawnrider={}
+
+	}
 }
 activeStands = {}
 activePzones = {}
@@ -84,6 +91,14 @@ Citizen.CreateThread(function()
 			for j=1, #BikeStand do
 					activeStands[j] = CreateObject(-1314273436, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z, false, false, false)
 					SetEntityHeading(activeStands[j], BikeStand[j].h)
+
+					RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
+					while not HasCollisionLoadedAroundEntity(datapack) do
+						RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
+						Citizen.Wait(0)
+					end
+					
+					PlaceObjectOnGroundProperly(activeStands[j])
 					FreezeEntityPosition(activeStands[j], true)
 					--
 					table.insert(activePzones, CircleZone:Create(vector3(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z), 2.0, {
@@ -189,7 +204,10 @@ AddEventHandler('mikesb:yescanhazbike', function(bObj)
 end)
 --
 RegisterNetEvent('mikesb:destroybike')
-AddEventHandler('mikesb:destroybike', function(bObj)
+AddEventHandler('mikesb:destroybike', function(bObj) 
+
+	SetEntityAsMissionEntity(bObj[1], false, true) -- IS this the regular vehicle id or the netid??
+	DeleteVehicle(bObj[1])
 	
 	--
 	RemoveBlip(playerBikeBlip)
