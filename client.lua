@@ -51,6 +51,13 @@ playerBikeBlip = nil
 local spawnBikeAtVehNode = function(bModel, cPos, cHead)
 	local model = (type(bModel) == 'number' and bModel or GetHashKey(bModel))
 	Citizen.CreateThread(function()
+		if playerBike ~= nil then
+			SetEntityAsMissionEntity(playerBike[1], false, true) -- IS this the regular vehicle id or the netid??
+			DeleteVehicle(playerBike[1])
+			RemoveBlip(playerBikeBlip)
+			playerBikeBlip = nil
+			playerBike = nil
+		end
 		RequestModel(model)
 		while not HasModelLoaded(model) do
 			Citizen.Wait(0)
