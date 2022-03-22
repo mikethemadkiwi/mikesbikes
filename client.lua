@@ -31,7 +31,7 @@ local BikeStand = {
 	},	
 	{
 		uid = 'pillhosplower1',		
-		pos=vector3(372.613, -572.846, 28.835),
+		pos=vector3(372.613, -572.846, 27.835),
 		h= 72.56,
 		spawnrider={}
 
