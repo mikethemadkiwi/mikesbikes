@@ -92,13 +92,13 @@ Citizen.CreateThread(function()
 					activeStands[j] = CreateObject(-1314273436, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z, false, false, false)
 					SetEntityHeading(activeStands[j], BikeStand[j].h)
 
-					RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
-					while not HasCollisionLoadedAroundEntity(datapack) do
-						RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
-						Citizen.Wait(0)
-					end
+					-- RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
+					-- while not HasCollisionLoadedAroundEntity(datapack) do
+					-- 	RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
+					-- 	Citizen.Wait(0)
+					-- end
 					
-					PlaceObjectOnGroundProperly(activeStands[j])
+					-- PlaceObjectOnGroundProperly(activeStands[j])
 					FreezeEntityPosition(activeStands[j], true)
 					--
 					table.insert(activePzones, CircleZone:Create(vector3(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z), 2.0, {
