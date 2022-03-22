@@ -98,14 +98,6 @@ Citizen.CreateThread(function()
 			for j=1, #BikeStand do
 					activeStands[j] = CreateObject(-1314273436, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z, false, false, false)
 					SetEntityHeading(activeStands[j], BikeStand[j].h)
-
-					-- RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
-					-- while not HasCollisionLoadedAroundEntity(datapack) do
-					-- 	RequestCollisionAtCoord(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z)
-					-- 	Citizen.Wait(0)
-					-- end
-					
-					-- PlaceObjectOnGroundProperly(activeStands[j])
 					FreezeEntityPosition(activeStands[j], true)
 					--
 					table.insert(activePzones, CircleZone:Create(vector3(BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z), 2.0, {
@@ -143,7 +135,7 @@ Citizen.CreateThread(function()
 			for j=1, #BikeStand do
 				local distanceToStand = #(pCoords -  BikeStand[j].pos)
 				if distanceToStand < 15 then
-		
+					DrawMarker(0, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z + 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.25, 0.25, 186, 218, 85, 255, true, false, 2, false, nil, nil, false)
 				end
 			end
 		end
@@ -205,20 +197,23 @@ AddEventHandler('mikesb:bikelist', function(bObj)
    BikeList = bObj
 end)
 --
+RegisterNetEvent('mikesb:nocannothazbike')
+AddEventHandler('mikesb:nocannothazbike', function(bObj)
+	print('no you cannot haz bike')
+end)
+--
 RegisterNetEvent('mikesb:yescanhazbike')
 AddEventHandler('mikesb:yescanhazbike', function(bObj)
 	local bSpawn = spawnBikeAtVehNode(bObj[1], bObj[2], bObj[3])
 end)
 --
 RegisterNetEvent('mikesb:destroybike')
-AddEventHandler('mikesb:destroybike', function(bObj) 
-
-	SetEntityAsMissionEntity(bObj[1], false, true) -- IS this the regular vehicle id or the netid??
+AddEventHandler('mikesb:destroybike', function(bObj)
+	SetEntityAsMissionEntity(bObj[1], false, true)
 	DeleteVehicle(bObj[1])
-	
-	--
 	RemoveBlip(playerBikeBlip)
-	playerBikeBlip = nil   
+	playerBikeBlip = nil
+	playerBike = nil
 end)
 
 -----------------------------------------
