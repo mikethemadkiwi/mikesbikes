@@ -35,6 +35,13 @@ local BikeStand = {
 		h= 72.56,
 		spawnrider={}
 
+	},	
+	{
+		uid = 'missionrowpd1',		
+		pos=vector3(441.573, -965.793, 27.983),
+		h= 358.29,
+		spawnrider={}
+
 	}
 }
 activeStands = {}
