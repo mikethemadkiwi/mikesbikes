@@ -17,8 +17,8 @@ local BikeStyles = {
 local BikeStand = {
 	{	
 		uid = 'observatory1',		
-		pos=vector3(-425.397, 1207.813, 324.76),
-		h= 255.0,
+		pos=vector3(-383.823, 1191.845, 324.76),
+		h= 75.0,
 		spawnrider={}
 
 	},	
