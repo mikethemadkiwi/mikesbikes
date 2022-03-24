@@ -1,4 +1,4 @@
-local POLYDEBUG = true
+local POLYDEBUG = false
 local isReady = false
 local BikeStyles = {
 	{
