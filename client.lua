@@ -46,7 +46,7 @@ local BikeStand = {
 	{
 		uid = 'appts1',		
 		pos=vector3(-295.975, -997.788, 29.250),
-		h= 358.29,
+		h= 246.287,
 		spawnrider={}
 
 	}
