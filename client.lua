@@ -53,7 +53,7 @@ local BikeStand = {
 	{
 		uid = 'prison1',		
 		pos=vector3(1850.316, 2560.724, 44.673),
-		h= 246.287,
+		h= 269.811,
 		spawnrider={}
 
 	}
