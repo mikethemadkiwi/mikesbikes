@@ -134,7 +134,7 @@ Citizen.CreateThread(function()
 		if NetworkIsPlayerActive(PlayerId()) then
 			for j=1, #BikeStand do
 				local distanceToStand = #(pCoords -  BikeStand[j].pos)
-				if distanceToStand < 15 then
+				if distanceToStand < 2.5 then
 					DrawMarker(0, BikeStand[j].pos.x, BikeStand[j].pos.y, BikeStand[j].pos.z + 1.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.25, 0.25, 186, 218, 85, 255, true, false, 2, false, nil, nil, false)
 				end
 			end
