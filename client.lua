@@ -63,6 +63,13 @@ local BikeStand = {
 		h= 118.898,
 		spawnrider={}
 
+	},	
+	{
+		uid = 'legionsq1',		
+		pos=vector3(216.758, -870.178, 29.4921),
+		h= 261.838,
+		spawnrider={}
+
 	}
 }
 activeStands = {}
