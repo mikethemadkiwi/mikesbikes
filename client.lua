@@ -74,7 +74,7 @@ local BikeStand = {
 	{
 		uid = 'paleto1',		
 		pos=vector3(-328.969, 6071.035, 30.2315),
-		h= 141.470,
+		h= 220.470,
 		spawnrider={}
 
 	}
