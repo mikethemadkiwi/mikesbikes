@@ -71,7 +71,7 @@ local BikeStand = {
 	},	
 	{
 		uid = 'harmony1',		
-		pos=vector3(569.754, 2741.778, 42.203),
+		pos=vector3(569.754, 2741.778, 41.203),
 		h= 184.754,
 		spawnrider={}
 	}
