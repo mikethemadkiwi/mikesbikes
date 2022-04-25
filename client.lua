@@ -20,63 +20,60 @@ local BikeStand = {
 		pos=vector3(-383.823, 1191.845, 324.76),
 		h= 75.0,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'townhall1',		
 		pos=vector3(-609.717, -167.174, 36.95),
 		h= 16.77,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'pillhosplower1',		
 		pos=vector3(372.613, -572.846, 27.835),
 		h= 72.56,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'missionrowpd1',		
 		pos=vector3(441.573, -965.793, 27.983),
 		h= 358.29,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'appts1',		
 		pos=vector3(-295.975, -997.788, 29.250),
 		h= 246.287,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'prison1',		
 		pos=vector3(1850.316, 2560.724, 44.673),
 		h= 269.811,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'sandyshores1',		
 		pos=vector3(1949.683, 3752.793, 31.201),
 		h= 118.898,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'legionsq1',		
 		pos=vector3(216.758, -870.178, 29.4921),
 		h= 261.838,
 		spawnrider={}
-
 	},	
 	{
 		uid = 'paleto1',		
 		pos=vector3(-328.097, 6070.035, 30.217),
 		h= 231.470,
 		spawnrider={}
-
+	},	
+	{
+		uid = 'harmony1',		
+		pos=vector3(869.754, 2741.778, 42.203),
+		h= 184.754,
+		spawnrider={}
 	}
 }
 activeStands = {}
